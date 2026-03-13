@@ -1,0 +1,212 @@
+.chat-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Agent Controls ──────────────────────────────────────────── */
+.agent-controls {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+}
+.agent-start-btn,
+.agent-stop-btn {
+  padding: 4px 14px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.agent-start-btn {
+  background: var(--accent-green);
+  color: var(--bg-primary);
+}
+.agent-stop-btn {
+  background: var(--accent-red);
+  color: var(--bg-primary);
+}
+
+/* ── Messages ────────────────────────────────────────────────── */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.chat-msg {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.msg-role {
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: 1;
+  padding-top: 2px;
+}
+
+.msg-content {
+  background: var(--bg-surface);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.msg-content pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: inherit;
+}
+
+.chat-user .msg-content {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+.typing {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* ── Input Bar ───────────────────────────────────────────────── */
+.chat-input-bar {
+  display: flex;
+  gap: 6px;
+  padding: 6px 8px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.chat-input {
+  flex: 1;
+  resize: none;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 1.4;
+  min-height: 32px;
+  max-height: 80px;
+}
+
+.send-btn {
+  padding: 0 16px;
+  border: none;
+  border-radius: 4px;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Dev Toggle ──────────────────────────────────────────────── */
+.dev-toggle {
+  padding: 4px 8px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.dev-toggle button {
+  width: 100%;
+  padding: 3px;
+  background: transparent;
+  border: 1px dashed var(--border);
+  border-radius: 3px;
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+/* ── Dev Panel ───────────────────────────────────────────────── */
+.dev-panel {
+  border-top: 1px solid var(--border);
+  max-height: 40%;
+  overflow-y: auto;
+  background: var(--bg-primary);
+  flex-shrink: 0;
+}
+
+.dev-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--bg-surface);
+  position: sticky;
+  top: 0;
+}
+
+.dev-panel-header button {
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.dev-panel-content {
+  padding: 4px 8px;
+}
+
+.dev-entry {
+  margin-bottom: 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.dev-entry.dev-error {
+  border-color: var(--accent-red);
+}
+
+.dev-time {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.dev-entry details {
+  margin: 2px 0;
+}
+
+.dev-entry summary {
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--accent);
+}
+
+.dev-entry pre {
+  font-size: 11px;
+  overflow-x: auto;
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 4px 0;
+  padding: 4px;
+  background: var(--bg-secondary);
+  border-radius: 3px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.dev-empty {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 12px;
+}

@@ -1,0 +1,210 @@
+.fsm-designer {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  outline: none;
+}
+
+.fsm-designer .react-flow {
+  background: var(--bg-primary);
+}
+
+/* ── Custom Node Styles ──────────────────────────────────────── */
+.fsm-node {
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: var(--bg-surface);
+  border: 2px solid var(--border);
+  min-width: 100px;
+  text-align: center;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.fsm-node.selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(137, 180, 250, 0.3);
+}
+
+.fsm-node.agent-active {
+  border-color: var(--accent-green);
+  box-shadow: 0 0 12px rgba(166, 227, 161, 0.5);
+  animation: pulse 1.5s infinite;
+}
+
+.fsm-node.node-start {
+  border-color: var(--accent-green);
+  border-radius: 24px;
+}
+
+.fsm-node.node-end {
+  border-color: var(--accent-red);
+  border-radius: 24px;
+}
+
+.node-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.node-action {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  font-family: monospace;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(166, 227, 161, 0.3); }
+  50% { box-shadow: 0 0 16px rgba(166, 227, 161, 0.7); }
+}
+
+/* ── Context Menu ────────────────────────────────────────────── */
+.ctx-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 998;
+}
+
+.ctx-menu {
+  position: fixed;
+  z-index: 999;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 0;
+  min-width: 160px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.ctx-item {
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+}
+.ctx-item:hover {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+/* ── Edit Dialog ─────────────────────────────────────────────── */
+.edit-dialog-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.edit-dialog {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 280px;
+}
+
+.edit-dialog h3 {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.edit-dialog label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.edit-dialog input {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: flex-end;
+}
+
+.edit-buttons button {
+  padding: 4px 14px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+.edit-buttons button:first-child {
+  background: var(--accent);
+  color: var(--bg-primary);
+  border-color: var(--accent);
+}
+
+/* ── Agent Confirm Bar ───────────────────────────────────────── */
+.agent-confirm-bar {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--accent-yellow);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  font-size: 13px;
+}
+
+.agent-confirm-bar code {
+  background: var(--bg-primary);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.confirm-btn,
+.cancel-btn {
+  padding: 4px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+}
+.confirm-btn {
+  background: var(--accent-green);
+  color: var(--bg-primary);
+}
+.cancel-btn {
+  background: var(--accent-red);
+  color: var(--bg-primary);
+}
+
+/* Fix React Flow dark mode */
+.react-flow__controls-button {
+  background: var(--bg-surface) !important;
+  border-color: var(--border) !important;
+  fill: var(--text-primary) !important;
+}
+.react-flow__edge-textbg {
+  fill: var(--bg-surface);
+}
+.react-flow__edge-text {
+  fill: var(--text-primary);
+}
