@@ -137,7 +137,6 @@ export default function ChatPanel({
       currentNodeId: startNode.id,
       pendingAction: startNode.data.action || null,
     });
-    setMessages([{ role: 'system', content: 'Agent 已启动，从开始节点开始执行。' }]);
   }, [fsmData.nodes, setAgentState]);
 
   // Confirm agent action

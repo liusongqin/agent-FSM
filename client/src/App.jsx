@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import FileExplorer from './components/FileExplorer';
 import Terminal from './components/Terminal';
 import FSMDesigner from './components/FSMDesigner';
@@ -8,7 +8,7 @@ import Divider from './components/Divider';
 import './App.css';
 
 const DEFAULT_SETTINGS = {
-  apiBase: 'http://localhost:1234/v1',
+  apiBase: 'http://localhost:8000/v1',
   apiKey: 'not-needed',
   model: 'Qwen3.5-0.8B',
   maxTokens: 1024,
@@ -26,10 +26,22 @@ export default function App() {
 
   // State
   const [cwd, setCwd] = useState('');
-  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+  const [settings, setSettings] = useState(() => {
+    try {
+      const saved = localStorage.getItem('agent-fsm-settings');
+      if (saved) return JSON.parse(saved);
+    } catch { /* ignore */ }
+    return DEFAULT_SETTINGS;
+  });
   const [showSettings, setShowSettings] = useState(false);
   const [chatMode, setChatMode] = useState('ask'); // 'ask' | 'agent'
-  const [fsmData, setFsmData] = useState({ nodes: [], edges: [] });
+  const [fsmData, setFsmData] = useState(() => {
+    try {
+      const saved = localStorage.getItem('agent-fsm-data');
+      if (saved) return JSON.parse(saved);
+    } catch { /* ignore */ }
+    return { nodes: [], edges: [] };
+  });
   const [agentState, setAgentState] = useState({
     running: false,
     currentNodeId: null,
@@ -39,6 +51,20 @@ export default function App() {
   const terminalRef = useRef(null);
 
   const containerRef = useRef(null);
+
+  // Persist settings to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem('agent-fsm-settings', JSON.stringify(settings));
+    } catch { /* ignore */ }
+  }, [settings]);
+
+  // Persist FSM data to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem('agent-fsm-data', JSON.stringify(fsmData));
+    } catch { /* ignore */ }
+  }, [fsmData]);
 
   // Terminal sends cwd updates
   const handleCwdChange = useCallback((newCwd) => {

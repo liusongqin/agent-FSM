@@ -54,7 +54,7 @@ app.get('/api/files', apiLimiter, (req, res) => {
 app.post('/api/chat', apiLimiter, async (req, res) => {
   const { messages, settings } = req.body;
   const {
-    apiBase = 'http://localhost:1234/v1',
+    apiBase = 'http://localhost:8000/v1',
     apiKey = 'not-needed',
     model = 'Qwen3.5-0.8B',
     maxTokens = 1024,

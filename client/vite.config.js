@@ -10,6 +10,11 @@ export default defineConfig({
       '/ws': {
         target: 'ws://localhost:3001',
         ws: true,
+        configure: (proxy) => {
+          proxy.on('error', (err) => {
+            // Suppress ECONNRESET errors on page refresh
+          });
+        },
       },
     },
   },
