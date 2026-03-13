@@ -142,12 +142,14 @@ wss.on('connection', (ws) => {
       } else if (parsed.type === 'resize') {
         ptyProcess.resize(parsed.cols, parsed.rows);
       } else if (parsed.type === 'getCwd') {
-        // Read cwd from /proc on Linux
+        // Read cwd from /proc on Linux, fallback for other platforms
         try {
-          const pid = ptyProcess.pid;
-          const cwd = fs.readlinkSync(`/proc/${pid}/cwd`);
-          currentCwd = cwd;
-          ws.send(JSON.stringify({ type: 'cwd', data: cwd }));
+          if (process.platform === 'linux') {
+            const pid = ptyProcess.pid;
+            const cwd = fs.readlinkSync(`/proc/${pid}/cwd`);
+            currentCwd = cwd;
+          }
+          ws.send(JSON.stringify({ type: 'cwd', data: currentCwd }));
         } catch {
           // fallback – cwd unchanged
           ws.send(JSON.stringify({ type: 'cwd', data: currentCwd }));

@@ -35,7 +35,16 @@ function StateNode({ id, data, selected }) {
 
 const nodeTypes = { stateNode: StateNode };
 
-let nodeId = 1;
+function generateNodeId(existingNodes) {
+  let maxNum = 0;
+  for (const n of existingNodes) {
+    const match = n.id.match(/^state_(\d+)$/);
+    if (match) {
+      maxNum = Math.max(maxNum, parseInt(match[1], 10));
+    }
+  }
+  return `state_${maxNum + 1}`;
+}
 
 /* ── Inner Flow Component ────────────────────────────────────── */
 function FSMFlow({ fsmData, setFsmData, agentState, setAgentState }) {
@@ -100,13 +109,14 @@ function FSMFlow({ fsmData, setFsmData, agentState, setAgentState }) {
   const addNode = useCallback(
     (type) => {
       if (!contextMenu) return;
-      const id = `state_${nodeId++}`;
+      const id = generateNodeId(nodes);
+      const idNum = parseInt(id.split('_')[1], 10);
       const newNode = {
         id,
         type: 'stateNode',
         position: contextMenu.flowPos,
         data: {
-          label: type === 'start' ? '开始' : type === 'end' ? '结束' : `状态${nodeId - 1}`,
+          label: type === 'start' ? '开始' : type === 'end' ? '结束' : `状态${idNum}`,
           nodeType: type,
           action: '',
         },
