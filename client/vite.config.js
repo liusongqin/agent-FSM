@@ -10,6 +10,13 @@ export default defineConfig({
       '/ws': {
         target: 'ws://localhost:3001',
         ws: true,
+        configure: (proxy) => {
+          proxy.on('error', (err) => {
+            if (err.code !== 'ECONNRESET') {
+              console.error('WebSocket proxy error:', err.message);
+            }
+          });
+        },
       },
     },
   },

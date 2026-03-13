@@ -167,6 +167,10 @@ function FSMFlow({ fsmData, setFsmData, agentState, setAgentState }) {
   const onKeyDown = useCallback(
     (e) => {
       if (e.key === 'Delete' || e.key === 'Backspace') {
+        // Don't delete nodes/edges when user is typing in an input or textarea
+        const tag = e.target.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
         const selectedNodeIds = new Set(nodes.filter((n) => n.selected).map((n) => n.id));
         const selectedEdgeIds = new Set(edges.filter((e) => e.selected).map((e) => e.id));
         if (selectedNodeIds.size === 0 && selectedEdgeIds.size === 0) return;
