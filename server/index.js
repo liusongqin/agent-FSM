@@ -13,6 +13,15 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(express.json());
 
+// ─── Rate Limiter ─────────────────────────────────────────────────
+const rateLimit = require('express-rate-limit');
+const apiLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 120,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // Serve static files from client build in production
 const clientDist = path.join(__dirname, '..', 'client', 'dist');
 if (fs.existsSync(clientDist)) {
@@ -20,8 +29,8 @@ if (fs.existsSync(clientDist)) {
 }
 
 // ─── File System API ───────────────────────────────────────────────
-app.get('/api/files', (req, res) => {
-  const dirPath = req.query.path || os.homedir();
+app.get('/api/files', apiLimiter, (req, res) => {
+  const dirPath = path.resolve(req.query.path || os.homedir());
   try {
     const entries = fs.readdirSync(dirPath, { withFileTypes: true });
     const items = entries
@@ -42,7 +51,7 @@ app.get('/api/files', (req, res) => {
 });
 
 // ─── Chat / Model Proxy API ───────────────────────────────────────
-app.post('/api/chat', async (req, res) => {
+app.post('/api/chat', apiLimiter, async (req, res) => {
   const { messages, settings } = req.body;
   const {
     apiBase = 'http://localhost:1234/v1',
@@ -167,7 +176,7 @@ wss.on('connection', (ws) => {
 });
 
 // ─── Fallback route for SPA ──────────────────────────────────────
-app.get('*', (req, res) => {
+app.get('*', apiLimiter, (req, res) => {
   const indexPath = path.join(clientDist, 'index.html');
   if (fs.existsSync(indexPath)) {
     res.sendFile(indexPath);
