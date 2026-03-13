@@ -1,0 +1,24 @@
+{
+  "name": "agent-fsm",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Agent based on Finite State Machine for terminal operations",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "node server/index.js",
+    "dev:client": "cd client && npx vite --port 3000",
+    "build": "cd client && npx vite build",
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "express-rate-limit": "^8.3.1",
+    "node-pty": "^1.0.0",
+    "openai": "^4.67.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
