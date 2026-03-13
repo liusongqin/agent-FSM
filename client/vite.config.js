@@ -12,7 +12,9 @@ export default defineConfig({
         ws: true,
         configure: (proxy) => {
           proxy.on('error', (err) => {
-            // Suppress ECONNRESET errors on page refresh
+            if (err.code !== 'ECONNRESET') {
+              console.error('WebSocket proxy error:', err.message);
+            }
           });
         },
       },
